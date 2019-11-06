@@ -1,0 +1,10 @@
+spring.servlet.multipart.location=${java.io.tmpdir}
+spring.servlet.multipart.max-file-size=400MB
+spring.servlet.multipart.max-request-size=400MB
+
+logging.file=d:\\temp\\app.log
+
+#spring.autoconfigure.exclude=AopAutoConfiguration.class
+
+spring.mvc.favicon.enabled=false
+logging.level.=debug

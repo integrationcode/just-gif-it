@@ -1,0 +1,15 @@
+spring:
+  servlet:
+    multipart:
+      location: ${java.io.tmpdir}      max-file-size: 400MB
+      max-request-size: 400MB  mvc:    favicon:      enabled: false  security:    user:      name: user
+      password: manage
+
+
+logging:  file: D:\\temp\app.log
+  level.: DEBUG
+
+
+com:  justgifit:    optimize: true
+    gif-location: ${java.io.tmpdir}/gif
+    
