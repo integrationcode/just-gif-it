@@ -1,1 +1,1 @@
-# just-gif-it
+# spring-boot projects
