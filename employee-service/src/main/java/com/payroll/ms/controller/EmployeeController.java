@@ -1,9 +1,12 @@
 package com.payroll.ms.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,16 +27,31 @@ public class EmployeeController {
 	@Qualifier("EmpRepo")
 	EmployeeRepository employeeRepo;
 	
+	@Autowired
+	Environment environment;
+	
 	@GetMapping(path = "/employee/{empId}")
-	public ResponseEntity<Employee> getEmployee(@PathVariable Long empId) {	
-		System.out.println("["+this.getClass().getName()+"][getEmployee] getById: " + empId);
+	public ResponseEntity<Employee> getEmployee(@PathVariable Long empId) {
+		try {
+			System.out.println("["+InetAddress.getLocalHost().getHostName()+":"+environment.getProperty("local.server.port")+"]["+this.getClass().getName()+"][getEmployee] getById: " + empId);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ResponseEntity<Employee>(employeeRepo.findById(empId).get(),HttpStatus.OK);
 		//return new Employee("Manoj","Verma",435579L,new Date());
 	}
 	
 	@PostMapping(path = "/employee/")
 	public ResponseEntity<Employee> postEmployee(@RequestBody Employee employee) {
-		System.out.println("["+this.getClass().getName()+"][postEmployee] Insert: " + employee);
+		
+		try {
+			System.out.println("["+InetAddress.getLocalHost().getHostName()+":"+environment.getProperty("local.server.port")+"]["+this.getClass().getName()+"][postEmployee] Insert: " + employee);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return new ResponseEntity<Employee>(employeeRepo.saveAndFlush(employee), HttpStatus.OK);
 	}
 	
