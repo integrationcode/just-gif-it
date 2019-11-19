@@ -1,1 +1,7 @@
-META-INF\spring-configuration-metadata.json
+com/boot/DasBoot/repository/ShipwreckRepository.class
+com/boot/DasBoot/model/Shipwreck.class
+com/boot/DasBoot/config/PersistenceConfiguration.class
+com/boot/DasBoot/controller/ShipwreckController.class
+com/boot/DasBoot/App.class
+com/boot/DasBoot/controller/HomeController.class
+META-INF/spring-configuration-metadata.json

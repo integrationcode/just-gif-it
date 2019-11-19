@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.boot.DasBoot.ShipwreckControllerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.825 s - in com.boot.DasBoot.ShipwreckControllerTest
