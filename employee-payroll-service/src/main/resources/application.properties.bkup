@@ -13,3 +13,12 @@ server.port=8300
 employee-service.ribbon.listOfServers=http://localhost:8100, http://localhost:8101
     
 role-service.ribbon.listOfServers=http://localhost:8200, http://localhost:8201
+
+
+employee-service:
+  ribbon:
+    listOfServers: http://localhost:8100, http://localhost:8101
+    
+role-service:
+  ribbon:
+    listOfServers: http://localhost:8200, http://localhost:8201

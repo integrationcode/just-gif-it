@@ -1,7 +1,7 @@
 spring:
   application:
     name: employee-payroll
-  datasource:    hikari:      jdbc-url: jdbc:h2:file:D:/Other/employeepayroll
+  datasource:    hikari:      jdbc-url: jdbc:h2:file:~/employeepayroll;AUTO_SERVER=true
       driver-class-name: org.h2.Driver
       username: sa
       password: manage
@@ -17,10 +17,9 @@ spring:
 
 server:  port: 8300
   
-employee-service:
-  ribbon:
-    listOfServers: http://localhost:8100, http://localhost:8101
-    
-role-service:
-  ribbon:
-    listOfServers: http://localhost:8200, http://localhost:8201
+eureka:
+  client:
+    service-url: 
+      defaultZone: http://localhost:8761/eureka/
+    healthcheck:
+      enabled: false
