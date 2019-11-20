@@ -2,14 +2,15 @@ package com.payroll.ms.controller;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.payroll.ms.model.Employee;
 import com.payroll.ms.repository.EmployeeRepository;
 
 @RestController
+@EnableHystrix
 public class EmployeeController {
 	
 	@Autowired
@@ -67,6 +70,16 @@ public class EmployeeController {
 		HttpHeaders responseHeader = new HttpHeaders();
 		responseHeader.add("X-Status", "Working");
 		return new ResponseEntity<List<Employee>>(employeeRepo.findAll(),responseHeader, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/employee/fault-tolerance")
+	@HystrixCommand(fallbackMethod = "fallBackEmployeeDetails")
+	public ResponseEntity<Employee> getEmployeeFaultTolerance(){
+		throw new RuntimeException("Runtime Exception To Test Hystrix!");
+	}
+	
+	public ResponseEntity<Employee> fallBackEmployeeDetails(){
+		return new ResponseEntity<Employee>(new Employee("Default", "Default", 0L, new Date()), HttpStatus.ALREADY_REPORTED);
 	}
 
 }

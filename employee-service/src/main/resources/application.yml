@@ -7,10 +7,14 @@ spring:
       enabled: true
   jpa:    hibernate:      ddl-auto: none
   flyway:    baseline-on-migrate: true  zipkin:    base-url: http://localhost:9411/
+    enabled: true
+logging:  file:    name: /tmp/sblog/employee.log
     
 eureka:  client:    service-url: 
       defaultZone: http://localhost:8761/eureka/
-    healthcheck:      enabled: false
+    healthcheck:      enabled: false    enabled: true
+    
     
 server:  port: 8100
+  
   
