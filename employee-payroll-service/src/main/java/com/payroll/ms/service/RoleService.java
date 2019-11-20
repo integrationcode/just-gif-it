@@ -10,10 +10,12 @@ import com.payroll.ms.model.EmployeePayroll;
 
 
 //@FeignClient(name = "role-service", url = "localhost:8101")
-@FeignClient(name = "role-service")
+//@FeignClient(name = "role-service")
+@FeignClient(name = "zuul-edge-server") //use Zuul API Gateway to invoke services
 @RibbonClient(name = "role-service")
 public interface RoleService {
 
-	@GetMapping(path = "/role/{roleName}")
+	//@GetMapping(path = "/role/{roleName}")
+	@GetMapping(path = "/role-service/role/{roleName}")
 	public ResponseEntity<EmployeePayroll> getRoleByRoleName(@PathVariable("roleName") String roleName);
 }
