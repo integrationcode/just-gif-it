@@ -4,6 +4,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
@@ -26,6 +28,8 @@ public class EmployeeRoleController {
 	
 	@Autowired
 	Environment environment;
+	
+	private static Logger logger = LoggerFactory.getLogger(EmployeeRoleController.class);
 
 	@GetMapping(path = "/role/{roleName}")
 	public ResponseEntity<EmployeeRole> getRoleByRoleName(@PathVariable String roleName) {
@@ -35,7 +39,7 @@ public class EmployeeRoleController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		logger.info("** getRoleByRoleName");
 		return new ResponseEntity<EmployeeRole>(employeeRoleRepo.findByRoleName(roleName), HttpStatus.OK);		
 	}
 	
@@ -44,6 +48,7 @@ public class EmployeeRoleController {
 		System.out.println("["+this.getClass().getName()+"][getRoles]");
 		HttpHeaders responseHeader = new HttpHeaders();
 		responseHeader.add("X-Resposne-Code", "Working!");
+		logger.info("** getRoles");
 		return new ResponseEntity<List<EmployeeRole>>(employeeRoleRepo.findAll(),responseHeader, HttpStatus.OK);
 	}
 }

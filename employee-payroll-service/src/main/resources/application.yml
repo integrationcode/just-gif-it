@@ -14,7 +14,7 @@ spring:
       ddl-auto: none
   flyway:
     baseline-on-migrate: true
-  main:    allow-bean-definition-overriding: true
+  main:    allow-bean-definition-overriding: true      zipkin:    base-url: http://localhost:9411/
 
 server:  port: 8300
   

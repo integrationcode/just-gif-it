@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: zipkin-tracking
+    
+server:
+  port: 9411
