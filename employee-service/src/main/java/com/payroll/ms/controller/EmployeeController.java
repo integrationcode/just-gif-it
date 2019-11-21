@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.payroll.ms.config.EmployeeConfig;
 import com.payroll.ms.model.Employee;
 import com.payroll.ms.repository.EmployeeRepository;
 
@@ -31,6 +32,9 @@ public class EmployeeController {
 	@Autowired
 	@Qualifier("EmpRepo")
 	EmployeeRepository employeeRepo;
+	
+	@Autowired
+	EmployeeConfig employeeConfig;
 	
 	@Autowired
 	Environment environment;
@@ -79,7 +83,7 @@ public class EmployeeController {
 	}
 	
 	public ResponseEntity<Employee> fallBackEmployeeDetails(){
-		return new ResponseEntity<Employee>(new Employee("Default", "Default", 0L, new Date()), HttpStatus.ALREADY_REPORTED);
+		return new ResponseEntity<Employee>(new Employee(employeeConfig.getDefaultFirstName(), employeeConfig.getDefaultLastName(), 0L, new Date()), HttpStatus.ALREADY_REPORTED);
 	}
 
 }
