@@ -1,0 +1,9 @@
+applications:
+  - name: house-service
+    host: house-service-pcf
+    path: target/house-service-0.0.1-SNAPSHOT.jar
+    memory: 1G
+    env:
+      SPRING_ACTIVE_PROFILE: dev
+    services:
+      - external-config

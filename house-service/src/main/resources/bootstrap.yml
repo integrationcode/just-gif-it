@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active:
+    - dev
+  application:
+      name: house-service
+server:
+  port: 9999
+management:
+  endpoints:
+    enabled-by-default: true
