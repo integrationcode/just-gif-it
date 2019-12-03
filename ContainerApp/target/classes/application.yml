@@ -1,6 +1,0 @@
-logging:
-  level.: debug
-  
-server:
-  port: 9000
-    
