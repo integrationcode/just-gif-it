@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HouseConfig {
 	private String houseNumber;
+	private String houseStreet;
 
 	public String getHouseNumber() {
 		return houseNumber;
@@ -15,6 +16,13 @@ public class HouseConfig {
 	public void setHouseNumber(String houseNumber) {
 		this.houseNumber = houseNumber;
 	}
-	
+
+	public String getHouseStreet() {
+		return houseStreet;
+	}
+
+	public void setHouseStreet(String houseStreet) {
+		this.houseStreet = houseStreet;
+	}
 	
 }

@@ -6,4 +6,5 @@ applications:
     env:
       SPRING_ACTIVE_PROFILE: dev
     services:
-      - external-config
+      - SpringCloudConfigGIT
+      - EurekaSR

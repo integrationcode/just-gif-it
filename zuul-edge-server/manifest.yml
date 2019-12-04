@@ -1,0 +1,7 @@
+applications:
+  - name: zuul-edge-server
+    host: zull-edge-server-pcf
+    path: target/zuul-edge-server-0.0.1-SNAPSHOT.jar
+    memory: 1G
+    services:
+      - EurekaSR
