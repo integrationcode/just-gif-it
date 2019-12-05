@@ -1,0 +1,4 @@
+spring:
+  application:
+    name: zull-apigw
+server:  port: 9090

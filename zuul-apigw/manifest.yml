@@ -1,0 +1,7 @@
+applications:
+- name: zuul-apigw
+  host: zuul-apigw-pcf
+  path: target/zuul-apigw-0.0.1-SNAPSHOT.jar
+  memory: 1G
+  services:
+  - EurekaSR
