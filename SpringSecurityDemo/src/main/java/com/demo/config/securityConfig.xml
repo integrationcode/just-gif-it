@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security-5.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<context:property-placeholder location="/com/demo/config/dbconfig.properties"/>
+	<!--
+	 use-expressions="true": Enables expression based configuration
+	 -->
+		<security:http auto-config="true" use-expressions="true">
+		<!-- Direct Access -->
+<!-- 		<security:intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/> -->
+		<!-- Via Handler Controller -->
+<!-- 		<security:intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/> -->		
+<!-- 		<security:intercept-url pattern="/loginFail" access="IS_AUTHENTICATED_ANONYMOUSLY"/> -->
+<!-- 		<security:intercept-url pattern="/logout" access="IS_AUTHENTICATED_ANONYMOUSLY"/> -->
+<!-- 			<security:intercept-url pattern="/**" access="ROLE_USER"/> -->
+			<security:intercept-url pattern="/login" access="permitAll"/>
+			<security:intercept-url pattern="/loginFail" access="permitAll"/>
+			<security:intercept-url pattern="/logout" access="permitAll"/>
+			<!-- Allows only admins to access createAccount url -->
+			<security:intercept-url pattern="/createAccount" access="hasRole('ROLE_ADMIN')"/>
+			<security:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+
+		
+		
+		<!-- For Basic Authentication -->
+<!-- 		<security:http-basic/> -->
+
+		<!-- My custom login page directly through security controller -->
+<!-- 		<security:form-login login-page="/login.jsp" default-target-url="/home"/> -->
+		<!-- Via Handler Controller -->
+		<security:form-login login-page="/login" default-target-url="/home" authentication-failure-url="/loginFail" />
+		
+		<security:logout logout-success-url="/logout"/>
+	</security:http>
+	
+	<security:authentication-manager>
+		<!-- In Memory Authentication Provider -->
+<!-- 		<security:authentication-provider> -->
+<!-- 			<security:user-service> -->
+<!-- 				<security:user name="Manoj" password="manage" authorities="ROLE_USER"/> -->
+<!-- 				<security:user name="Mishika" password="manage" authorities="ROLE_TRIAL_USER"/> -->
+<!-- 			</security:user-service> -->
+<!-- 		</security:authentication-provider> -->
+
+	<!-- User access using database -->
+		<security:authentication-provider ref="mySecurityDBAccess"/>
+
+	<!-- Simpler way to create database acess without having to create bean -->
+		<security:authentication-provider>
+			<security:password-encoder hash="bcrypt"/>
+			<security:jdbc-user-service data-source-ref="mySQLDataSource"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	
+	<context:property-placeholder location="/WEB-INF/config/dbconfig.properties"/>
+	
+	<bean id="mySQLDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" primary="true">
+		<property name="url" value="${dbUrl}" />
+		<property name="username" value="${dbUserName}" />
+		<property name="password" value="${dbPassword}" />
+		<property name="driverClassName" value="${dbDriver}" />
+	</bean>
+	
+<!-- 	<bean id="mySecurityDBAccess" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl" autowire=""> -->
+<!-- 		<property name="dataSource" ref="mySQLDataSource"/> -->
+<!-- 		<property name="test"> -->
+<!-- 			<list> -->
+<!-- 				<value></value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+</beans>
