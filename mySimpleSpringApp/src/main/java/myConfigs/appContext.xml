@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		
+	<context:property-placeholder location="./mySimpleApp.properties"/>
+
+	<bean id="fruit" class="mySimpleSpringApp.Fruit" scope="prototype"></bean>
+	<bean id="furitWithName" class="mySimpleSpringApp.Fruit" init-method="initMethod" destroy-method="destroyMethod" scope="singleton">
+		<constructor-arg index="0" value="Apple" />
+	</bean>
+	<!-- Bean with constructor, list, & map initialization -->
+	<bean id="fruitWithNameAndList" class="mySimpleSpringApp.Fruit" primary="true">
+		<constructor-arg index="0" value="AssortedFruits"/>
+		<property name="fruitNameList">
+			<list>
+				<value>Apple</value>
+				<value>Mango</value>
+				<value>Strawberry</value>
+				<value>Chiku</value>
+			</list>
+		</property>
+		<property name="fruitNameMap">
+			<map>
+				<entry key="Apple" value="Red"/>
+				<entry key="Mango" value="Orange"/>
+				<entry key="Strawberry" value="Red"/>
+				<entry key="Chiku" value="Green"/>
+			</map>
+		</property>
+	</bean>
+	<bean id="vegetable" class="mySimpleSpringApp.Vegetable"/>
+	<bean id="vegWithName" class="mySimpleSpringApp.Vegetable">
+		<property name="myName" value="Spinach" />
+	</bean>
+	<!-- Bean with p type properties -->
+	<bean id="vegWithPName" class="mySimpleSpringApp.Vegetable" p:myName="Tinda" primary="true"/>
+	
+	<!-- Bean with Injector Example -->
+	<bean id="meat" class="mySimpleSpringApp.Meat"/>
+	<bean id="dairy" class="mySimpleSpringApp.Dairy" />
+	<bean id="grain" class="mySimpleSpringApp.Grain" />
+	<bean id="meal" class="mySimpleSpringApp.Meal">
+		<property name="fruit" ref="furitWithName"/>
+		<property name="vegetable" ref="vegWithName"/>
+		<property name="meat" ref="meat"/>
+		<property name="dairy" ref="dairy"/>
+		<property name="grain" ref="grain"/>
+	</bean>
+	
+	<!-- Bean with Constructor injection
+		public Meal(Fruit fruit, Vegetable vegetable, Meat meat, Dairy dairy, Grain grain) 
+	-->
+	<bean id="mealWithConstInjection" class="mySimpleSpringApp.Meal">
+		<constructor-arg index="0" ref="fruitWithNameAndList"></constructor-arg>
+		<constructor-arg index="1" ref="vegWithName"></constructor-arg>
+		<constructor-arg index="2" ref="meat"></constructor-arg>
+		<constructor-arg index="3" ref="dairy"></constructor-arg>
+		<constructor-arg index="4" ref="grain"></constructor-arg>
+	</bean>
+	
+	<!-- Bean with properties injection -->
+	<bean id="fruitWithProperty" class="mySimpleSpringApp.Fruit">
+		<property name="name" value="${fruit-name}" />
+	</bean>
+	
+	<bean id="vegetableWithProperty" class="mySimpleSpringApp.Vegetable">
+		<property name="myName" value="${vegetable-name}" />
+	</bean>
+	
+	<!-- Nested bean with properties -->
+	<bean id="mealWithNestedAndProperties" class="mySimpleSpringApp.Meal">
+		<property name="fruit">
+			<bean id="appleFruit" class="mySimpleSpringApp.Apple">
+				<constructor-arg index="0" value="${fruit-name}"/>
+				<constructor-arg index="1" value="${fruit-description}"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Auto Wiring -->
+	<bean id="autoWiringByTypeMeal" class="mySimpleSpringApp.Meal" autowire="constructor"/>
+	
+</beans>

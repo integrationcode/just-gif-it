@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Tells the application that beans are annotation driven -->
+	<mvc:annotation-driven/>
+	
+	<!-- Tells the application where to find the annotation to create beans -->
+	<context:component-scan base-package="com.demo.controllers"/>
+	
+<!-- 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
+<!-- 		<property name="prefix" value="WEB-INF/jsp/"/> -->
+<!-- 		<property name="suffix" value=".jsp"/> -->
+<!-- 	</bean> -->
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="WEB-INF/jsp/" p:suffix=".jsp"/>
+	
+	<!-- To handle file upload and implement constraints -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="5252880"/>
+	</bean>
+	
+	<!-- For handling any static content e.g. PDFs, Images, Text files etc... -->
+	<!-- ** for searching all nested folders within the resource folder -->
+	<mvc:resources location="WEB-INF/resources/" mapping="/myResources/**" />
+
+</beans>
