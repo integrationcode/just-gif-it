@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: rabbitmq-event-broker  rabbitmq:    host: 10.142.128.48
+    port: 5672
+    username: guest
+    password: guest
+  main:    allow-bean-definition-overriding: true
+management:  endpoints:    web:      exposure:        include:        - "*"
+server:  port: 8500
+  
